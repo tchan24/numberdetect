@@ -8,6 +8,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense, Input
 from tensorflow.keras.optimizers import Adam
+import pickle
 
 #############################
 path = 'myData'
@@ -16,6 +17,9 @@ classnumber = []
 testratio = 0.2
 validationratio = 0.2
 imagedimensions = (32,32,3)
+batchSize = 50
+epochsVal = 2
+epochSteps = 2000
 #############################
 
 mylist = os.listdir(path)
@@ -119,3 +123,32 @@ def myModel():
 
 model = myModel()
 print(model.summary())
+
+
+history = model.fit(dataGen.flow(X_train, Y_train, batch_size=batchSize), steps_per_epoch=epochSteps, epochs=epochsVal, validation_data=(X_validation, Y_validation), shuffle=True)
+
+# plotting results
+plt.figure(1)
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.legend(['training','validation'])
+plt.title('Loss')
+plt.xlabel('epoch')
+plt.figure(2)
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.legend(['training','validation'])
+plt.title('Accuracy')
+plt.xlabel('epoch')
+plt.show()
+
+# eval
+score = model.evaluate(X_test, Y_test,verbose=0)
+print('Test Score = ',score[0])
+print('Test Accuracy =', score[1])
+
+#save model
+#### SAVE THE TRAINED MODEL 
+pickle_out= open("model_trained.p", "wb")
+pickle.dump(model,pickle_out)
+pickle_out.close()
