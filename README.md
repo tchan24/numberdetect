@@ -20,8 +20,8 @@ Make sure you have Python installed on your system. You will also need to instal
 2. Navigate to the project directory.
 
 ```sh
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/tchan24/numberdetect
+cd numberdetect
 ```
 3. Create a virtual environment
 ```sh
