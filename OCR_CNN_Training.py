@@ -8,7 +8,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense, Input
 from tensorflow.keras.optimizers import Adam
-import pickle
+#import pickle
 
 #############################
 path = 'myData'
@@ -18,7 +18,7 @@ testratio = 0.2
 validationratio = 0.2
 imagedimensions = (32,32,3)
 batchSize = 50
-epochsVal = 2
+epochsVal = 10
 epochSteps = 2000
 #############################
 
@@ -148,7 +148,8 @@ print('Test Score = ',score[0])
 print('Test Accuracy =', score[1])
 
 #save model
-#### SAVE THE TRAINED MODEL 
-pickle_out= open("model_trained.p", "wb")
-pickle.dump(model,pickle_out)
-pickle_out.close()
+#pickle_out= open("model_trained.p", "wb")
+#pickle.dump(model,pickle_out)
+#pickle_out.close()
+# Save the trained model
+model.save("model_trained.keras")
